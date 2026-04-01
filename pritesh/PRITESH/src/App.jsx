@@ -5,7 +5,10 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustSection from './components/TrustSection';
 import FocusSection from './components/FocusSection';
+import SkillsSection from './components/SkillsSection';
+import HackathonSection from './components/HackathonSection';
 import ProjectsSection from './components/ProjectsSection';
+import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import './index.css';
 
@@ -36,7 +39,10 @@ function App() {
               <Hero />
               <TrustSection />
               <FocusSection />
+              <SkillsSection />
+              <HackathonSection />
               <ProjectsSection />
+              <CertificationsSection />
               <ContactSection />
             </main>
           </>
