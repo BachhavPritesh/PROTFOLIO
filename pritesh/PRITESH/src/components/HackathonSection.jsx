@@ -238,7 +238,7 @@ const HackathonSection = () => {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
           gap: isMobile ? '1.5rem' : '2.5rem'
         }}>
           {hackathons.map((project, idx) => (
