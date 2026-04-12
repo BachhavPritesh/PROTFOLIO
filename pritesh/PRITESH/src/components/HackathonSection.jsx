@@ -32,6 +32,7 @@ const offlineHackathons = [
     github: "https://github.com/raunak2015/smart-retail-shelf_DAIICT.git",
     techStack: ["Computer Vision", "IoT", "React", "Python", "Analytics"],
     photos: [
+      "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009648/d4_jgaeoh.jpg",
       "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009049/d4_q2zgwk.jpg",
       "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009044/d3_l6sxsq.jpg",
       "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009039/WhatsApp_Image_2026-04-12_at_2.15.01_PM_ndjw3q.jpg"
