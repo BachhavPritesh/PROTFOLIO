@@ -16,6 +16,14 @@ const certifications = [
     subtitle: "Certificate of Participation",
     description: "Awarded for actively participating in a 24-hour hackathon and contributing to the development of the FleetFlow Modular Fleet & Logistics Management System.",
     image: "https://d8it4huxumps7.cloudfront.net/lambda-pdfs/certificate-images/a22bfc93-4970-4609-ae21-681949f5abbb.jpg"
+  },
+  {
+    id: 3,
+    title: "GiveMyCertificate Verified Credential",
+    subtitle: "Certificate of Achievement",
+    description: "A verified certificate hosted on GiveMyCertificate platform.",
+    image: "https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?q=80&w=800&auto=format&fit=crop", // placeholder image representing a certificate/achievement
+    link: "https://certificate.givemycertificate.com/c/c254ca47-c825-4408-8e64-039ebef12041"
   }
 ];
 
