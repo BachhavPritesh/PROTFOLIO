@@ -5,12 +5,18 @@ import { Award, Maximize2, X } from 'lucide-react';
 const certifications = [
   {
     id: 1,
+    title: "HackRust 1.0 - DCRUST",
+    subtitle: "Certificate of Participation",
+    description: "Awarded for participating in HackRust 1.0, a major hackathon organized by DCRUST, Murthal on the Unstop platform, representing team 'Code Catalyst'.",
+    image: "https://d8it4huxumps7.cloudfront.net/lambda-pdfs/certificate-images/cbb7cc3d-b28d-4b60-82bd-b91cf0deabaf.jpg"
+  },
+  {
+    id: 2,
     title: "Odoo x Gujarat Vidyapith Hackathon '26",
     subtitle: "Certificate of Participation",
     description: "Awarded for actively participating in a 24-hour hackathon and contributing to the development of the FleetFlow Modular Fleet & Logistics Management System.",
     image: "https://d8it4huxumps7.cloudfront.net/lambda-pdfs/certificate-images/a22bfc93-4970-4609-ae21-681949f5abbb.jpg"
   }
-  // You can easily add more certificates here in the future
 ];
 
 const CertCard = ({ cert, onOpen }) => {

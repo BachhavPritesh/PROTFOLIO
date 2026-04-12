@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import TrustSection from './components/TrustSection';
+import EducationSection from './components/EducationSection';
 import FocusSection from './components/FocusSection';
 import SkillsSection from './components/SkillsSection';
 import HackathonSection from './components/HackathonSection';
@@ -37,7 +37,7 @@ function App() {
             <Navbar />
             <main>
               <Hero />
-              <TrustSection />
+              <EducationSection />
               <FocusSection />
               <SkillsSection />
               <HackathonSection />
