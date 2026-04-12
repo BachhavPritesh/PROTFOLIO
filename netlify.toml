@@ -1,0 +1,4 @@
+[build]
+  base = "pritesh/PRITESH"
+  publish = "dist"
+  command = "npm run build"
