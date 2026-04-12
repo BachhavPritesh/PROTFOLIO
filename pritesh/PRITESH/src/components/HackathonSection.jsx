@@ -37,6 +37,14 @@ const offlineHackathons = [
       "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009044/d3_l6sxsq.jpg",
       "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009039/WhatsApp_Image_2026-04-12_at_2.15.01_PM_ndjw3q.jpg"
     ]
+  },
+  {
+    title: "AI Marketing Assistant",
+    event: "Offline Hackathon",
+    description: "An intelligent AI-powered marketing assistant that automates content creation, campaign strategies, and audience targeting to supercharge brand growth.",
+    image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776010083/l1_d6qtpv.png",
+    github: "https://github.com/raunak2015/ai-marketing-assistant",
+    techStack: ["AI/ML", "React", "Node.js", "NLP", "Marketing APIs"]
   }
 ];
 
