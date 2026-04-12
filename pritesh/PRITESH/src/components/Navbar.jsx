@@ -22,7 +22,6 @@ const Navbar = () => {
         { name: 'About', target: '#about' },
         { name: 'Education', target: '#education' },
         { name: 'Projects', target: '#projects' },
-        { name: 'Focus', target: '#focus' },
         { name: 'Contact', target: '#contact' },
     ];
 

@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import AboutMeSection from './components/AboutMeSection';
 import EducationSection from './components/EducationSection';
-import FocusSection from './components/FocusSection';
 import SkillsSection from './components/SkillsSection';
 import HackathonSection from './components/HackathonSection';
 import ProjectsSection from './components/ProjectsSection';
@@ -39,7 +38,6 @@ function App() {
             <main>
               <Hero />
               <AboutMeSection />
-              <FocusSection />
               <SkillsSection />
               <HackathonSection />
               <ProjectsSection />

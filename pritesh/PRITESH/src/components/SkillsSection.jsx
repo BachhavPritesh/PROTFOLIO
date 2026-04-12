@@ -1,36 +1,114 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code2, Globe, BrainCircuit, Terminal } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { Code2, Globe, BrainCircuit, Database } from 'lucide-react';
+
+const TiltCard = ({ children, style, className }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <motion.div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                ...style,
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+                perspective: "1000px"
+            }}
+            className={className}
+        >
+            <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d", height: '100%' }}>
+                {children}
+            </div>
+        </motion.div>
+    );
+};
 
 const skillCategories = [
   {
-    title: "CORE LANGUAGES",
-    description: "Programming",
+    title: "Language & Logic",
+    description: "Core Programming",
     icon: Code2,
-    skills: ["Python", "C", "JavaScript", "C++"]
+    color: "#a3ff00",
+    skills: [
+      { name: "JavaScript / TypeScript", level: 92 },
+      { name: "Python", level: 88 },
+      { name: "C / C++", level: 85 },
+      { name: "Java", level: 75 }
+    ]
   },
   {
-    title: "FRONTEND & BACKEND",
-    description: "Web Dev",
+    title: "Frontend Engineering",
+    description: "UI / UX & Architecture",
     icon: Globe,
-    skills: ["HTML", "CSS", "React", "Node.js", "Tailwind CSS"]
+    color: "#61DAFB",
+    skills: [
+      { name: "React.js", level: 95 },
+      { name: "Tailwind CSS", level: 90 },
+      { name: "Framer Motion", level: 85 },
+      { name: "Next.js", level: 78 }
+    ]
   },
   {
-    title: "DATA & INTELLIGENCE",
-    description: "AI / ML / DS",
+    title: "Backend & Systems",
+    description: "Server & Databases",
+    icon: Database,
+    color: "#339933",
+    skills: [
+      { name: "Node.js / Express", level: 88 },
+      { name: "MongoDB", level: 85 },
+      { name: "REST APIs Architecture", level: 90 },
+      { name: "SQL", level: 75 }
+    ]
+  },
+  {
+    title: "AI & Intelligence",
+    description: "Machine Learning & Data",
     icon: BrainCircuit,
-    skills: ["Pandas", "NumPy", "Matplotlib", "Scikit-learn"]
-  },
-  {
-    title: "DEV ENVIRONMENT",
-    description: "Tools",
-    icon: Terminal,
-    skills: ["Git", "GitHub", "VS Code", "Vite", "Figma"]
+    color: "#ff00ff",
+    skills: [
+      { name: "Computer Vision", level: 87 },
+      { name: "Pandas & NumPy", level: 88 },
+      { name: "Scikit-learn", level: 80 },
+      { name: "Deep Learning / YOLO", level: 75 }
+    ]
   }
 ];
 
 const SkillsSection = () => {
   const sectionRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -45,7 +123,7 @@ const SkillsSection = () => {
       ref={sectionRef}
       id="skills" 
       style={{
-        padding: '100px 10%',
+        padding: isMobile ? '80px 5%' : '120px 10%',
         backgroundColor: 'transparent',
         position: 'relative',
         zIndex: 2,
@@ -62,101 +140,109 @@ const SkillsSection = () => {
           }}>
             Technical <span style={{ color: 'var(--accent-color)', fontStyle: 'italic', fontFamily: 'serif' }}>Expertise</span>
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
-            A structured breakdown of my core technical competencies and tools.
-          </p>
+          <div style={{
+            width: '60px',
+            height: '4px',
+            background: 'var(--accent-color)',
+            margin: '0 auto',
+            borderRadius: '2px',
+            boxShadow: '0 0 10px var(--accent-color)'
+          }} />
         </div>
 
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-          gap: '2rem' 
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+          gap: isMobile ? '2.5rem' : '4rem' 
         }}>
-          {skillCategories.map((category, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                backdropFilter: 'blur(15px)',
-                borderRadius: '30px',
-                padding: '2.5rem',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ 
-                position: 'absolute', 
-                top: '-20px', 
-                right: '-20px', 
-                opacity: 0.05,
-                color: 'var(--accent-color)'
-              }}>
-                <category.icon size={150} />
-              </div>
+          {skillCategories.map((category, idx) => {
+            const Icon = category.icon;
+            return (
+              <TiltCard
+                key={idx}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  backdropFilter: 'blur(30px)',
+                  borderRadius: '35px',
+                  border: `1px solid ${category.color}33`,
+                  padding: isMobile ? '2rem' : '3.5rem',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: `0 15px 35px -10px ${category.color}22`
+                }}
+              >
+                {/* Ambient glow */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-50px',
+                  right: '-50px',
+                  width: '150px',
+                  height: '150px',
+                  background: category.color,
+                  filter: 'blur(80px)',
+                  opacity: 0.15,
+                  zIndex: 0
+                }} />
 
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  <div style={{ 
-                    width: '45px', 
-                    height: '45px', 
-                    borderRadius: '12px', 
-                    background: 'var(--accent-color)', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    color: '#000' 
-                  }}>
-                    <category.icon size={22} />
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', marginBottom: '2.5rem' }}>
+                    <div style={{ 
+                      width: '55px', 
+                      height: '55px', 
+                      borderRadius: '16px', 
+                      background: `linear-gradient(135deg, ${category.color}44, transparent)`,
+                      border: `1px solid ${category.color}88`,
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: category.color,
+                      boxShadow: `0 0 20px ${category.color}44`
+                    }}>
+                      <Icon size={28} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#fff', letterSpacing: '0.02em', marginBottom: '4px' }}>
+                        {category.title}
+                      </h3>
+                      <p style={{ color: category.color, fontSize: '0.9rem', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                        {category.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: '700', color: '#fff', tracking: '0.05em' }}>
-                    {category.title}
-                  </h3>
-                </div>
 
-                <p style={{ 
-                  color: 'var(--accent-color)', 
-                  fontSize: '0.8rem', 
-                  fontWeight: '600', 
-                  marginBottom: '1.5rem', 
-                  letterSpacing: '0.15em',
-                  opacity: 0.8
-                }}>
-                  {category.description}
-                </p>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-                  {category.skills.map((skill, sIdx) => (
-                    <motion.span
-                      key={sIdx}
-                      whileHover={{ 
-                        scale: 1.05, 
-                        backgroundColor: 'rgba(163, 255, 0, 0.15)',
-                        borderColor: 'var(--accent-color)'
-                      }}
-                      style={{
-                        padding: '0.6rem 1.2rem',
-                        borderRadius: '100px',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        fontSize: '0.9rem',
-                        fontWeight: '500',
-                        color: '#fff',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    {category.skills.map((skill, sIdx) => (
+                      <div key={sIdx}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                          <span style={{ color: 'var(--text-secondary)', fontWeight: '600', fontSize: '0.95rem' }}>{skill.name}</span>
+                          <span style={{ color: '#fff', fontWeight: '700', fontSize: '0.9rem' }}>{skill.level}%</span>
+                        </div>
+                        <div style={{ 
+                          width: '100%', 
+                          height: '6px', 
+                          background: 'rgba(255,255,255,0.05)', 
+                          borderRadius: '10px',
+                          overflow: 'hidden'
+                        }}>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.5, delay: 0.2 + (sIdx * 0.1), ease: "easeOut" }}
+                            style={{ 
+                              height: '100%', 
+                              background: category.color,
+                              boxShadow: `0 0 10px ${category.color}`
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </TiltCard>
+            );
+          })}
         </div>
       </motion.div>
     </section>
