@@ -55,22 +55,86 @@ const Navbar = () => {
                     transition: 'background-color 0.3s ease'
                 }}
             >
-                {/* Mini Logo */}
+                {/* Modern Brand Logo */}
                 <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', zIndex: 1001 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', zIndex: 1001, gap: '10px' }}
                     onClick={(e) => scrollToSection(e, '#home')}
                 >
-                    <svg viewBox="0 0 100 100" style={{ width: isMobile ? '30px' : '45px', height: isMobile ? '30px' : '45px' }}>
-                        <rect x="32" y="20" width="8" height="60" fill="var(--accent-color)" />
-                        <path
-                            d="M40 20 L65 20 L75 35 L65 50 L40 50"
+                    <svg viewBox="0 0 100 100" style={{ width: isMobile ? '35px' : '45px', height: isMobile ? '35px' : '45px', overflow: 'visible' }}>
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="var(--accent-color)" />
+                                <stop offset="100%" stopColor="var(--accent-color)" stopOpacity="0.2" />
+                            </linearGradient>
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        
+                        {/* Rotating geometric frame */}
+                        <motion.polygon 
+                            points="50,5 89,27 89,72 50,95 11,72 11,27"
                             fill="transparent"
-                            stroke="var(--accent-color)"
-                            strokeWidth="8"
-                            strokeLinecap="square"
+                            stroke="rgba(255,255,255,0.08)"
+                            strokeWidth="1.5"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                            style={{ transformOrigin: "50px 50px" }}
+                        />
+                        <motion.polygon 
+                            points="50,15 80,32 80,68 50,85 20,68 20,32"
+                            fill="transparent"
+                            stroke="rgba(163, 255, 0, 0.15)"
+                            strokeWidth="1"
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                            style={{ transformOrigin: "50px 50px" }}
+                        />
+
+                        {/* Stylized P */}
+                        <motion.path
+                            d="M38,72 L38,28 L58,28 C68,28 72,34 72,43 C72,52 68,58 58,58 L38,58"
+                            fill="transparent"
+                            stroke="url(#neonGradient)"
+                            strokeWidth="7"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            filter="url(#glow)"
+                            initial={{ pathLength: 0, opacity: 0 }}
+                            animate={{ pathLength: 1, opacity: 1 }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                        />
+                        
+                        {/* Accent dot */}
+                        <motion.circle 
+                            cx="55" 
+                            cy="43" 
+                            r="3.5" 
+                            fill="#fff" 
+                            initial={{ scale: 0 }}
+                            animate={{ scale: [0, 1.5, 1] }}
+                            transition={{ delay: 1.5, duration: 0.5 }}
                         />
                     </svg>
+
+                    {!isMobile && (
+                        <motion.span 
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            style={{ 
+                                fontSize: '1.2rem', 
+                                fontWeight: '900', 
+                                color: '#fff', 
+                                letterSpacing: '1.5px',
+                                fontFamily: "'Syne', sans-serif"
+                            }}
+                        >
+                            PRITESH<span style={{ color: 'var(--accent-color)' }}>.</span>
+                        </motion.span>
+                    )}
                 </motion.div>
 
                 {/* Desktop Links */}
