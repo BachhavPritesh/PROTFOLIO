@@ -42,7 +42,7 @@ const offlineHackathons = [
     title: "AI Marketing Assistant",
     event: "Offline Hackathon",
     description: "An intelligent AI-powered marketing assistant that automates content creation, campaign strategies, and audience targeting to supercharge brand growth.",
-    image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776010083/l1_d6qtpv.png",
+    image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776010245/l2_shukvt.png",
     github: "https://github.com/raunak2015/ai-marketing-assistant",
     techStack: ["AI/ML", "React", "Node.js", "NLP", "Marketing APIs"]
   }
