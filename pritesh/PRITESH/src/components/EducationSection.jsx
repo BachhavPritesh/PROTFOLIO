@@ -166,7 +166,7 @@ const EducationSection = () => {
             ref={containerRef}
             id="education"
             style={{
-                backgroundColor: '#0a0a0a',
+                backgroundColor: 'transparent',
                 padding: isMobile ? '80px 5%' : '120px 10%',
                 minHeight: '100vh',
                 position: 'relative',

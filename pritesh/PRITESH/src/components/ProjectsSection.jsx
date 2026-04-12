@@ -274,7 +274,7 @@ const ProjectsSection = () => {
             style={{
                 position: 'relative',
                 padding: isMobile ? '80px 5%' : '140px 10%',
-                background: '#0a0a0a',
+                background: 'transparent',
                 overflow: 'hidden',
                 minHeight: '100vh',
                 display: 'flex',

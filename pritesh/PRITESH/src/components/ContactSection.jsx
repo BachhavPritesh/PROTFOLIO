@@ -85,7 +85,7 @@ const ContactSection = () => {
             ref={sectionRef}
             id="contact"
             style={{
-                backgroundColor: '#0c0c0c',
+                backgroundColor: 'transparent',
                 padding: isMobile ? '100px 5% 40px 5%' : '120px 10%',
                 minHeight: '100vh',
                 position: 'relative',

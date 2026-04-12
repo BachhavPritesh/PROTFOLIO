@@ -210,7 +210,8 @@ const FocusSection = () => {
             ref={sectionRef}
             id="focus"
             style={{
-                backgroundColor: '#050505',
+                backgroundColor: 'transparent',
+                marginBottom: isMobile ? '80px' : '150px',
                 padding: isMobile ? '70px 5%' : '120px 10%',
                 minHeight: '120vh',
                 position: 'relative',
