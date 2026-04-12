@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Twitter, Instagram, Send, Download } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Youtube, Send, Download } from 'lucide-react';
 import MagneticButton from './ui/MagneticButton';
 import MouseGlow from './ui/MouseGlow';
 
@@ -319,7 +319,8 @@ const Hero = () => {
                             { Icon: Github, color: '#171515', link: 'https://github.com/BachhavPritesh' },
                             { Icon: Linkedin, color: '#0077B5', link: 'https://www.linkedin.com/in/pritesh-bachhav-233148396/' },
                             { Icon: Twitter, color: '#1DA1F2', link: 'https://x.com/PRITESH_CG' },
-                            { Icon: Instagram, color: '#E4405F', link: 'https://instagram.com' }
+                            { Icon: Instagram, color: '#E4405F', link: 'https://instagram.com' },
+                            { Icon: Youtube, color: '#FF0000', link: 'https://www.youtube.com/@PriteshBachhav' }
                         ].map(({ Icon, color, link }, idx) => (
                             <motion.a
                                 key={idx}
