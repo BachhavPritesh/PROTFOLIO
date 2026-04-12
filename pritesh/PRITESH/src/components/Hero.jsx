@@ -285,7 +285,7 @@ const Hero = () => {
                         </MagneticButton>
                         <MagneticButton
                             className="outline-btn"
-                            onClick={() => document.querySelector('#focus')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
                             style={{ padding: isMobile ? '10px 20px' : '12px 24px', fontSize: isMobile ? '0.9rem' : '1rem' }}
                         >
                             About Me
