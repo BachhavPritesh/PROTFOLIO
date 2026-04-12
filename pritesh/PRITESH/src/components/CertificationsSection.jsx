@@ -235,6 +235,13 @@ const ImageModal = ({ cert, onClose }) => {
 const CertificationsSection = () => {
   const sectionRef = useRef(null);
   const [selectedCert, setSelectedCert] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -284,7 +291,7 @@ const CertificationsSection = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
             gap: '2.5rem'
           }}>
             {certifications.map(cert => (
