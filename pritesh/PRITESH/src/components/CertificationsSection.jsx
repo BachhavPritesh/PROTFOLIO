@@ -19,10 +19,10 @@ const certifications = [
   },
   {
     id: 3,
-    title: "GiveMyCertificate Verified Credential",
-    subtitle: "Certificate of Achievement",
-    description: "A verified certificate hosted on GiveMyCertificate platform.",
-    image: "https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?q=80&w=800&auto=format&fit=crop", // placeholder image representing a certificate/achievement
+    title: "Protex: Hack-2-Win Hackathon",
+    subtitle: "Certificate of Participation",
+    description: "Awarded for commendable participation and continued efforts in Protex: Hack-2-Win Hackathon, organised by Protege, IGDTUW.",
+    image: "https://res.cloudinary.com/dzmso2ukz/image/upload/q_auto/f_auto/v1776003203/protege_tiqr5h.jpg", 
     link: "https://certificate.givemycertificate.com/c/c254ca47-c825-4408-8e64-039ebef12041"
   }
 ];
