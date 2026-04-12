@@ -93,11 +93,21 @@ const projects = [
 ];
 
 const ProjectCard = ({ project, index, isMobile }) => {
+    const [isActive, setIsActive] = useState(false);
+
+    const handleClick = () => {
+        if (isMobile) setIsActive((prev) => !prev);
+    };
+
+    // Determine the current animation state
+    const animateState = isActive ? 'hover' : undefined;
+
     return (
         <motion.div
             initial="initial"
             whileInView="inView"
-            whileHover="hover"
+            whileHover={!isMobile ? 'hover' : undefined}
+            animate={isMobile && isActive ? 'hover' : undefined}
             viewport={{ once: true, amount: 0.3 }}
             variants={{
                 initial: { opacity: 0, y: 50 },
@@ -108,6 +118,7 @@ const ProjectCard = ({ project, index, isMobile }) => {
                 },
                 hover: { y: -10, transition: { duration: 0.3 } }
             }}
+            onClick={handleClick}
             style={{
                 position: 'relative',
                 width: '100%',
@@ -121,11 +132,15 @@ const ProjectCard = ({ project, index, isMobile }) => {
             <motion.img
                 src={project.image}
                 alt={project.title}
-                variants={{
+                animate={{
+                    scale: isActive ? 1.1 : 1,
+                    opacity: isActive ? 0.3 : 0.6
+                }}
+                variants={!isMobile ? {
                     initial: { scale: 1, opacity: 0.6 },
                     inView: { scale: 1, opacity: 0.6 },
                     hover: { scale: 1.1, opacity: 0.3 }
-                }}
+                } : undefined}
                 transition={{ duration: 0.6 }}
                 style={{
                     width: '100%',
@@ -135,11 +150,16 @@ const ProjectCard = ({ project, index, isMobile }) => {
             />
 
             <motion.div
-                variants={{
+                animate={{
+                    background: isActive
+                        ? 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9) 100%)'
+                        : 'rgba(0,0,0,0)'
+                }}
+                variants={!isMobile ? {
                     initial: { background: 'rgba(0,0,0,0)' },
                     inView: { background: 'rgba(0,0,0,0)' },
                     hover: { background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9) 100%)' }
-                }}
+                } : undefined}
                 transition={{ duration: 0.4 }}
                 style={{
                     position: 'absolute',
@@ -154,13 +174,14 @@ const ProjectCard = ({ project, index, isMobile }) => {
                     zIndex: 2
                 }}
             >
-                {/* Reveal Section: Only visible on hover */}
+                {/* Reveal Section */}
                 <motion.div
-                    variants={{
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                    variants={!isMobile ? {
                         initial: { opacity: 0, y: 20 },
                         inView: { opacity: 0, y: 20 },
                         hover: { opacity: 1, y: 0 }
-                    }}
+                    } : undefined}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                 >
                     <h3 style={{
@@ -242,6 +263,7 @@ const ProjectCard = ({ project, index, isMobile }) => {
         </motion.div>
     );
 };
+
 
 const ProjectsSection = () => {
     const sectionRef = useRef(null);
