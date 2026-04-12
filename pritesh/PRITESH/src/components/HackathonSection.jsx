@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Github, Trophy, Code2, Globe, MapPin, Youtube } from 'lucide-react';
+import { Github, Trophy, Code2, Globe, MapPin, Youtube, Image as ImageIcon, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const onlineHackathons = [
   {
@@ -30,11 +30,99 @@ const offlineHackathons = [
     description: "An innovative smart retail shelf solution featuring real-time inventory tracking and analytics.",
     image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776004069/generated-image_1_gkplhd.png",
     github: "https://github.com/raunak2015/smart-retail-shelf_DAIICT.git",
-    techStack: ["Computer Vision", "IoT", "React", "Python", "Analytics"]
+    techStack: ["Computer Vision", "IoT", "React", "Python", "Analytics"],
+    photos: [
+      "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009049/d4_q2zgwk.jpg",
+      "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009044/d3_l6sxsq.jpg",
+      "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776009039/WhatsApp_Image_2026-04-12_at_2.15.01_PM_ndjw3q.jpg"
+    ]
   }
 ];
 
-const HackathonCard = ({ project, isMobile }) => {
+// --- Photo Gallery Modal Component ---
+const PhotoGalleryModal = ({ photos, onClose }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextPhoto = () => setCurrentIndex((prev) => (prev + 1) % photos.length);
+  const prevPhoto = () => setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') nextPhoto();
+      if (e.key === 'ArrowLeft') prevPhoto();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 99999,
+        background: 'rgba(0,0,0,0.96)', backdropFilter: 'blur(15px)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+      }}
+    >
+      <button onClick={onClose} style={{ 
+        position: 'absolute', top: 30, right: 30, background: 'rgba(255,255,255,0.1)', border: 'none', 
+        borderRadius: '50%', padding: '10px', color: '#fff', cursor: 'pointer', zIndex: 10, transition: 'all 0.3s' 
+      }}>
+        <X size={28} />
+      </button>
+
+      <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '90%', maxWidth: '1000px', height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        
+        {photos.length > 1 && (
+            <button onClick={prevPhoto} style={{ position: 'absolute', left: -20, background: 'rgba(255,255,255,0.1)', borderRadius: '50%', padding: '12px', border: 'none', color: '#fff', cursor: 'pointer', zIndex: 10, backdropFilter: 'blur(5px)' }}>
+              <ChevronLeft size={30} />
+            </button>
+        )}
+
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={photos[currentIndex]}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            style={{ 
+              maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', 
+              borderRadius: '16px', boxShadow: '0 20px 60px rgba(0,0,0,0.8)' 
+            }}
+          />
+        </AnimatePresence>
+
+        {photos.length > 1 && (
+            <button onClick={nextPhoto} style={{ position: 'absolute', right: -20, background: 'rgba(255,255,255,0.1)', borderRadius: '50%', padding: '12px', border: 'none', color: '#fff', cursor: 'pointer', zIndex: 10, backdropFilter: 'blur(5px)' }}>
+              <ChevronRight size={30} />
+            </button>
+        )}
+      </div>
+
+      <div onClick={(e) => e.stopPropagation()} style={{ display: 'flex', gap: '15px', marginTop: '30px' }}>
+        {photos.map((p, idx) => (
+            <img 
+              key={idx} src={p} onClick={() => setCurrentIndex(idx)}
+              style={{ 
+                  width: '70px', height: '70px', objectFit: 'cover', borderRadius: '12px', cursor: 'pointer', 
+                  border: currentIndex === idx ? '2px solid var(--accent-color)' : '2px solid transparent',
+                  opacity: currentIndex === idx ? 1 : 0.4, transition: 'all 0.3s ease',
+                  boxShadow: currentIndex === idx ? '0 0 15px rgba(163,255,0,0.3)' : 'none'
+              }} 
+            />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+const HackathonCard = ({ project, isMobile, openGallery }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -187,6 +275,7 @@ const HackathonCard = ({ project, isMobile }) => {
                   e.currentTarget.style.background = '#fff';
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.2)';
                 }}
+                onClick={(e) => e.stopPropagation()}
               >
                 <Github size={18} /> GitHub
               </a>
@@ -224,9 +313,49 @@ const HackathonCard = ({ project, isMobile }) => {
                     e.currentTarget.style.color = '#ff4d4d';
                     e.currentTarget.style.boxShadow = 'none';
                   }}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <Youtube size={18} /> Demo
                 </a>
+              )}
+
+              {project.photos && project.photos.length > 0 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openGallery(project.photos);
+                  }}
+                  className="group"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: 'rgba(163, 255, 0, 0.1)',
+                    color: 'var(--accent-color)',
+                    border: '1px solid rgba(163, 255, 0, 0.3)',
+                    padding: isMobile ? '8px 14px' : '10px 18px',
+                    borderRadius: '10px',
+                    fontSize: isMobile ? '0.85rem' : '0.95rem',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                    e.currentTarget.style.background = 'var(--accent-color)';
+                    e.currentTarget.style.color = '#000';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(163, 255, 0, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.background = 'rgba(163, 255, 0, 0.1)';
+                    e.currentTarget.style.color = 'var(--accent-color)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <ImageIcon size={18} /> Photos
+                </button>
               )}
             </div>
           </motion.div>
@@ -240,6 +369,7 @@ const HackathonSection = () => {
   const sectionRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [activeTab, setActiveTab] = useState('online');
+  const [activeGallery, setActiveGallery] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -257,120 +387,142 @@ const HackathonSection = () => {
 
   const currentProjects = activeTab === 'online' ? onlineHackathons : offlineHackathons;
 
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (activeGallery) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [activeGallery]);
+
   return (
-    <section
-      ref={sectionRef}
-      id="hackathons"
-      style={{
-        padding: isMobile ? '80px 5%' : '100px 10%',
-        backgroundColor: 'transparent',
-        position: 'relative',
-        zIndex: 2,
-        overflow: 'hidden'
-      }}
-    >
-      <motion.div style={{ opacity, y }}>
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <h2 style={{
-            fontSize: 'clamp(2.5rem, 8vw, 4rem)',
-            fontWeight: '600',
-            color: '#fff',
-            marginBottom: '1rem'
-          }}>
-            Hackathon <span style={{ color: 'var(--accent-color)', fontStyle: 'italic', fontFamily: 'serif' }}>Projects</span>
-          </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '650px', margin: '0 auto', lineHeight: 1.6 }}>
-            Showcasing innovative solutions developed under pressure, demonstrating rapid prototyping, teamwork, and problem-solving skills.
-          </p>
-        </div>
-
-        {/* Animated Segmented Control Tabs */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px' }}>
-          <div style={{
-            display: 'flex',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '100px',
-            padding: '6px',
-            position: 'relative'
-          }}>
-            {/* Online Tab */}
-            <button
-              onClick={() => setActiveTab('online')}
-              style={{
-                position: 'relative',
-                background: 'transparent',
-                border: 'none',
-                padding: isMobile ? '12px 24px' : '14px 40px',
-                fontSize: isMobile ? '0.9rem' : '1.05rem',
-                fontWeight: '700',
-                color: activeTab === 'online' ? '#000' : '#fff',
-                cursor: 'pointer',
-                zIndex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'color 0.3s ease'
-              }}
-            >
-              <Globe size={18} /> Online 
-            </button>
-
-            {/* Offline Tab */}
-            <button
-              onClick={() => setActiveTab('offline')}
-              style={{
-                position: 'relative',
-                background: 'transparent',
-                border: 'none',
-                padding: isMobile ? '12px 24px' : '14px 40px',
-                fontSize: isMobile ? '0.9rem' : '1.05rem',
-                fontWeight: '700',
-                color: activeTab === 'offline' ? '#000' : '#fff',
-                cursor: 'pointer',
-                zIndex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                transition: 'color 0.3s ease'
-              }}
-            >
-              <MapPin size={18} /> Offline
-            </button>
-
-            {/* The Animated "Pill" that slides behind the active text */}
-            <motion.div
-              layout
-              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              style={{
-                position: 'absolute',
-                top: 6,
-                bottom: 6,
-                left: activeTab === 'online' ? '6px' : '50%',
-                width: `calc(50% - 6px)`,
-                background: 'var(--accent-color)',
-                borderRadius: '100px',
-                boxShadow: '0 0 15px rgba(163, 255, 0, 0.4)',
-                zIndex: 0
-              }}
-            />
+    <>
+      <section
+        ref={sectionRef}
+        id="hackathons"
+        style={{
+          padding: isMobile ? '80px 5%' : '100px 10%',
+          backgroundColor: 'transparent',
+          position: 'relative',
+          zIndex: 2,
+          overflow: 'hidden'
+        }}
+      >
+        <motion.div style={{ opacity, y }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{
+              fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+              fontWeight: '600',
+              color: '#fff',
+              marginBottom: '1rem'
+            }}>
+              Hackathon <span style={{ color: 'var(--accent-color)', fontStyle: 'italic', fontFamily: 'serif' }}>Projects</span>
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '650px', margin: '0 auto', lineHeight: 1.6 }}>
+              Showcasing innovative solutions developed under pressure, demonstrating rapid prototyping, teamwork, and problem-solving skills.
+            </p>
           </div>
-        </div>
 
-        {/* Hackathon Project Grid */}
-        <motion.div layout style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-          gap: isMobile ? '1.5rem' : '2.5rem'
-        }}>
-          <AnimatePresence mode="popLayout">
-            {currentProjects.map((project, idx) => (
-              <HackathonCard key={project.title} project={project} isMobile={isMobile} />
-            ))}
-          </AnimatePresence>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px' }}>
+            <div style={{
+              display: 'flex',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '100px',
+              padding: '6px',
+              position: 'relative'
+            }}>
+              <button
+                onClick={() => setActiveTab('online')}
+                style={{
+                  position: 'relative',
+                  background: 'transparent',
+                  border: 'none',
+                  padding: isMobile ? '12px 24px' : '14px 40px',
+                  fontSize: isMobile ? '0.9rem' : '1.05rem',
+                  fontWeight: '700',
+                  color: activeTab === 'online' ? '#000' : '#fff',
+                  cursor: 'pointer',
+                  zIndex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'color 0.3s ease'
+                }}
+              >
+                <Globe size={18} /> Online 
+              </button>
+
+              <button
+                onClick={() => setActiveTab('offline')}
+                style={{
+                  position: 'relative',
+                  background: 'transparent',
+                  border: 'none',
+                  padding: isMobile ? '12px 24px' : '14px 40px',
+                  fontSize: isMobile ? '0.9rem' : '1.05rem',
+                  fontWeight: '700',
+                  color: activeTab === 'offline' ? '#000' : '#fff',
+                  cursor: 'pointer',
+                  zIndex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'color 0.3s ease'
+                }}
+              >
+                <MapPin size={18} /> Offline
+              </button>
+
+              <motion.div
+                layout
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                style={{
+                  position: 'absolute',
+                  top: 6,
+                  bottom: 6,
+                  left: activeTab === 'online' ? '6px' : '50%',
+                  width: `calc(50% - 6px)`,
+                  background: 'var(--accent-color)',
+                  borderRadius: '100px',
+                  boxShadow: '0 0 15px rgba(163, 255, 0, 0.4)',
+                  zIndex: 0
+                }}
+              />
+            </div>
+          </div>
+
+          <motion.div layout style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+            gap: isMobile ? '1.5rem' : '2.5rem'
+          }}>
+            <AnimatePresence mode="popLayout">
+              {currentProjects.map((project, idx) => (
+                <HackathonCard 
+                  key={project.title} 
+                  project={project} 
+                  isMobile={isMobile} 
+                  openGallery={setActiveGallery} 
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </section>
+      </section>
+
+      {/* Render Modal Overlay */}
+      <AnimatePresence>
+        {activeGallery && (
+          <PhotoGalleryModal 
+            photos={activeGallery} 
+            onClose={() => setActiveGallery(null)} 
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
