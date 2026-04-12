@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Github, Trophy, Code2, Globe, MapPin } from 'lucide-react';
+import { Github, Trophy, Code2, Globe, MapPin, Youtube } from 'lucide-react';
 
 const onlineHackathons = [
   {
@@ -9,6 +9,7 @@ const onlineHackathons = [
     description: "AI-powered engine that personalizes onboarding by analyzing resumes, detecting skill gaps, and generating adaptive learning paths.",
     image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1774101720/Screenshot_2026-03-21_171921_cmlp8y.png",
     github: "https://github.com/BachhavPritesh/ai-adaptive-onboarding/tree/main",
+    youtube: "https://youtu.be/wAxOARRuCY8?si=qwEbDUKx9yAhyFGS",
     techStack: ["React.js", "Node.js", "MongoDB", "OpenAI GPT", "spaCy"]
   },
   {
@@ -17,6 +18,7 @@ const onlineHackathons = [
     description: "Modular Fleet & Logistics Management System developed to optimize operations during a fast-paced 24-hour sprint.",
     image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1000",
     github: "https://github.com/BachhavPritesh/Odoo-x-Gujarat-Vidyapith-Hackathon-26",
+    youtube: "https://youtu.be/Jc4mP5UNUas?si=qUGX30D-S7-OYMPh",
     techStack: ["React", "Express.js", "Node.js", "REST APIs", "Analytics"]
   }
 ];
@@ -154,40 +156,79 @@ const HackathonCard = ({ project, isMobile }) => {
               </div>
             </div>
 
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                background: '#fff',
-                color: '#000',
-                padding: isMobile ? '10px 16px' : '12px 20px',
-                borderRadius: '10px',
-                fontSize: isMobile ? '0.9rem' : '1rem',
-                fontWeight: '700',
-                textDecoration: 'none',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)',
-                alignSelf: 'flex-start'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                e.currentTarget.style.background = 'var(--accent-color)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(163, 255, 0, 0.4)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.background = '#fff';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.2)';
-              }}
-            >
-              <Github size={20} /> View GitHub Repo
-            </a>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: '#fff',
+                  color: '#000',
+                  padding: isMobile ? '8px 14px' : '10px 18px',
+                  borderRadius: '10px',
+                  fontSize: isMobile ? '0.85rem' : '0.95rem',
+                  fontWeight: '700',
+                  textDecoration: 'none',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                  e.currentTarget.style.background = 'var(--accent-color)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(163, 255, 0, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.background = '#fff';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.2)';
+                }}
+              >
+                <Github size={18} /> GitHub
+              </a>
+
+              {project.youtube && (
+                <a
+                  href={project.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: 'rgba(255, 0, 0, 0.1)',
+                    color: '#ff4d4d',
+                    border: '1px solid rgba(255, 0, 0, 0.3)',
+                    padding: isMobile ? '8px 14px' : '10px 18px',
+                    borderRadius: '10px',
+                    fontSize: isMobile ? '0.85rem' : '0.95rem',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                    e.currentTarget.style.background = '#ff0000';
+                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 0, 0, 0.4)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.background = 'rgba(255, 0, 0, 0.1)';
+                    e.currentTarget.style.color = '#ff4d4d';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Youtube size={18} /> Demo
+                </a>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
