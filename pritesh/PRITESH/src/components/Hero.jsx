@@ -65,7 +65,7 @@ const Hero = () => {
                 minHeight: '100vh',
                 display: 'flex',
                 alignItems: 'center',
-                padding: isMobile ? '120px 5% 60px 5%' : '0 10%',
+                padding: isMobile ? '120px 5% 60px 5%' : '100px 10% 40px 10%',
                 position: 'relative',
                 overflow: 'hidden'
             }}
@@ -77,8 +77,8 @@ const Hero = () => {
                 y,
                 width: '100%',
                 display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1.2fr 1fr' : '1.2fr 1fr',
-                gap: isMobile ? '2.5rem' : isTablet ? '2rem' : '4rem',
+                gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : '1fr 1fr',
+                gap: isMobile ? '3rem' : '4rem',
                 alignItems: 'center',
                 marginTop: isMobile ? '20px' : '0'
             }}>
@@ -90,7 +90,7 @@ const Hero = () => {
                     transition={{ duration: 0.8 }}
                     onHoverStart={() => setIsHovered(true)}
                     onHoverEnd={() => setIsHovered(false)}
-                    style={{ position: 'relative', cursor: 'pointer', maxWidth: isMobile ? '350px' : 'none', margin: isMobile ? '0 auto' : '0' }}
+                    style={{ position: 'relative', cursor: 'pointer', maxWidth: isMobile ? '300px' : '450px', margin: isMobile ? '0 auto' : '0 auto 0 0', zIndex: 10 }}
                 >
                     {/* ... (glitch layers and neon shape remain same) ... */}
                     {showGlitch && (
