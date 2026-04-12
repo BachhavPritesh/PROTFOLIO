@@ -278,7 +278,7 @@ const FocusSection = () => {
                     display: 'grid',
                     gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
                     gridTemplateRows: isMobile ? 'auto' : 'repeat(2, 380px)',
-                    gap: '1.8rem',
+                    gap: isMobile ? '2rem' : '3.5rem',
                 }}>
                     {/* Card 1: Main Tech Universe (2x2) */}
                     <TiltCard style={{
