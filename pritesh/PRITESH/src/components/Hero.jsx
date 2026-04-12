@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Twitter, Instagram, Send } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, Send, Download } from 'lucide-react';
 import MagneticButton from './ui/MagneticButton';
 import MouseGlow from './ui/MouseGlow';
 
@@ -290,6 +290,24 @@ const Hero = () => {
                         >
                             About Me
                         </MagneticButton>
+                        <a 
+                            href="#" 
+                            download="Pritesh_Bachhav_CV.pdf"
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <MagneticButton
+                                className="outline-btn"
+                                style={{ 
+                                    padding: isMobile ? '10px 20px' : '12px 24px', 
+                                    fontSize: isMobile ? '0.9rem' : '1rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}
+                            >
+                                <Download size={isMobile ? 16 : 18} /> Download CV
+                            </MagneticButton>
+                        </a>
                     </div>
 
                     <div style={{
