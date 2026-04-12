@@ -40,7 +40,7 @@ const offlineHackathons = [
   },
   {
     title: "AI Marketing Assistant",
-    event: "Offline Hackathon",
+    event: "GU Hackathon",
     description: "An intelligent AI-powered marketing assistant that automates content creation, campaign strategies, and audience targeting to supercharge brand growth.",
     image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776010245/l2_shukvt.png",
     github: "https://github.com/raunak2015/ai-marketing-assistant",
