@@ -144,17 +144,26 @@ const Hero = () => {
                         }}
                     />
 
+                    <style>{`
+                        @keyframes maskSweep {
+                            0% { -webkit-mask-position: 250% 250%; mask-position: 250% 250%; }
+                            100% { -webkit-mask-position: -100% -100%; mask-position: -100% -100%; }
+                        }
+                    `}</style>
+
+                    {/* Grayscale Base Image */}
                     <motion.img
                         src="https://res.cloudinary.com/dzmso2ukz/image/upload/v1767710904/prit_v53ufo.jpg"
                         alt="Pritesh"
-                        whileHover={{ scale: 1.05 }}
                         animate={{
+                            scale: isHovered ? 1.05 : 1,
                             filter: showGlitch
                                 ? 'grayscale(0%) contrast(1.1)'
                                 : 'grayscale(100%) contrast(1.1)',
                             x: isGlitching ? [0, -5, 5, 0] : 0,
                         }}
                         transition={{
+                            scale: { duration: 0.3 },
                             filter: { duration: 0.4 },
                             x: { duration: 0.1, repeat: isGlitching ? Infinity : 0 }
                         }}
@@ -163,6 +172,40 @@ const Hero = () => {
                             aspectRatio: '1',
                             objectFit: 'cover',
                             clipPath: 'polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%)',
+                        }}
+                    />
+
+                    {/* Color Sweep Overlay */}
+                    <motion.img
+                        src="https://res.cloudinary.com/dzmso2ukz/image/upload/v1767710904/prit_v53ufo.jpg"
+                        alt="Pritesh Color Reveal"
+                        animate={{
+                            scale: isHovered ? 1.05 : 1,
+                            x: isGlitching ? [0, -5, 5, 0] : 0,
+                            opacity: showGlitch ? 0 : 1 // Hide sweep when glitch is active
+                        }}
+                        transition={{
+                            scale: { duration: 0.3 },
+                            x: { duration: 0.1, repeat: isGlitching ? Infinity : 0 },
+                            opacity: { duration: 0.3 }
+                        }}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            aspectRatio: '1',
+                            objectFit: 'cover',
+                            clipPath: 'polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%)',
+                            filter: 'grayscale(0%) contrast(1.2) saturate(1.2)', 
+                            WebkitMaskImage: 'linear-gradient(60deg, transparent 40%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 52%, transparent 60%)',
+                            maskImage: 'linear-gradient(60deg, transparent 40%, rgba(0,0,0,1) 48%, rgba(0,0,0,1) 52%, transparent 60%)',
+                            WebkitMaskSize: '300% 300%',
+                            maskSize: '300% 300%',
+                            WebkitMaskRepeat: 'no-repeat',
+                            maskRepeat: 'no-repeat',
+                            animation: 'maskSweep 6s infinite ease-in-out',
+                            pointerEvents: 'none',
                         }}
                     />
 
