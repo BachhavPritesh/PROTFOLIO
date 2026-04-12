@@ -18,6 +18,14 @@ const hackathons = [
     image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1000",
     github: "https://github.com/BachhavPritesh/Odoo-x-Gujarat-Vidyapith-Hackathon-26",
     techStack: ["React", "Express.js", "Node.js", "REST APIs", "Analytics"]
+  },
+  {
+    title: "Smart Retail Shelf",
+    event: "DAIICT Hackathon",
+    description: "An innovative smart retail shelf solution featuring real-time inventory tracking and analytics.",
+    image: "https://res.cloudinary.com/dzmso2ukz/image/upload/v1776004069/generated-image_1_gkplhd.png",
+    github: "https://github.com/raunak2015/smart-retail-shelf_DAIICT.git",
+    techStack: ["Computer Vision", "IoT", "React", "Python", "Analytics"]
   }
 ];
 
