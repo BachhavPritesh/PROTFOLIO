@@ -37,12 +37,12 @@ function App() {
             <Navbar />
             <main>
               <Hero />
-              <EducationSection />
               <FocusSection />
               <SkillsSection />
               <HackathonSection />
               <ProjectsSection />
               <CertificationsSection />
+              <EducationSection />
               <ContactSection />
             </main>
           </>

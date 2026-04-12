@@ -105,31 +105,52 @@ const LoadingScreen = () => {
                 animate="visible"
                 style={{
                     display: 'flex',
-                    fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    gap: '2vw',
+                    fontSize: 'clamp(2rem, 8vw, 5rem)',
                     fontWeight: '900',
                     fontFamily: "'Syne', sans-serif",
                     letterSpacing: '4px',
                     textTransform: 'uppercase',
-                    zIndex: 10
+                    textAlign: 'center',
+                    zIndex: 10,
+                    padding: '0 20px',
+                    width: '100%'
                 }}
             >
-                {text.map((char, index) => {
-                    const isAccent = index >= 8; // "PRITESH " is 8 chars, "BACHHAV" starts at 8
-                    return (
+                {/* PRITESH */}
+                <div style={{ display: 'flex' }}>
+                    {"PRITESH".split("").map((char, index) => (
                         <motion.span 
-                            key={index} 
+                            key={`first-${index}`} 
                             variants={letterVariants}
                             style={{ 
                                 display: 'inline-block',
-                                marginRight: char === " " ? '2vw' : '0',
-                                color: isAccent ? 'var(--accent-color)' : '#ffffff',
-                                textShadow: isAccent ? '0 0 20px rgba(163, 255, 0, 0.3)' : 'none'
+                                color: '#ffffff'
                             }}
                         >
                             {char}
                         </motion.span>
-                    );
-                })}
+                    ))}
+                </div>
+
+                {/* BACHHAV */}
+                <div style={{ display: 'flex' }}>
+                    {"BACHHAV".split("").map((char, index) => (
+                        <motion.span 
+                            key={`last-${index}`} 
+                            variants={letterVariants}
+                            style={{ 
+                                display: 'inline-block',
+                                color: 'var(--accent-color)',
+                                textShadow: '0 0 20px rgba(163, 255, 0, 0.3)'
+                            }}
+                        >
+                            {char}
+                        </motion.span>
+                    ))}
+                </div>
             </motion.div>
         </motion.div>
     );
