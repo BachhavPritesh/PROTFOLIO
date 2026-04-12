@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Github, Trophy, Code2 } from 'lucide-react';
+import { Github, Trophy, Code2, Globe, MapPin } from 'lucide-react';
 
-const hackathons = [
+const onlineHackathons = [
   {
     title: "AI-Adaptive Onboarding Engine",
     event: "Innovation Hackathon",
@@ -18,7 +18,10 @@ const hackathons = [
     image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1000",
     github: "https://github.com/BachhavPritesh/Odoo-x-Gujarat-Vidyapith-Hackathon-26",
     techStack: ["React", "Express.js", "Node.js", "REST APIs", "Analytics"]
-  },
+  }
+];
+
+const offlineHackathons = [
   {
     title: "Smart Retail Shelf",
     event: "DAIICT Hackathon",
@@ -34,12 +37,13 @@ const HackathonCard = ({ project, isMobile }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
+      layout
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: -30 }}
+      transition={{ duration: 0.4 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      // For mobile devices, tapping registers as hover 
       onClick={() => setIsHovered(!isHovered)}
       style={{
         background: 'rgba(255, 255, 255, 0.03)',
@@ -194,8 +198,9 @@ const HackathonCard = ({ project, isMobile }) => {
 const HackathonSection = () => {
   const sectionRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [activeTab, setActiveTab] = useState('online');
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -208,6 +213,8 @@ const HackathonSection = () => {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [100, 0, 0, -100]);
+
+  const currentProjects = activeTab === 'online' ? onlineHackathons : offlineHackathons;
 
   return (
     <section
@@ -222,7 +229,7 @@ const HackathonSection = () => {
       }}
     >
       <motion.div style={{ opacity, y }}>
-        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
           <h2 style={{
             fontSize: 'clamp(2.5rem, 8vw, 4rem)',
             fontWeight: '600',
@@ -236,15 +243,91 @@ const HackathonSection = () => {
           </p>
         </div>
 
-        <div style={{
+        {/* Animated Segmented Control Tabs */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '50px' }}>
+          <div style={{
+            display: 'flex',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '100px',
+            padding: '6px',
+            position: 'relative'
+          }}>
+            {/* Online Tab */}
+            <button
+              onClick={() => setActiveTab('online')}
+              style={{
+                position: 'relative',
+                background: 'transparent',
+                border: 'none',
+                padding: isMobile ? '12px 24px' : '14px 40px',
+                fontSize: isMobile ? '0.9rem' : '1.05rem',
+                fontWeight: '700',
+                color: activeTab === 'online' ? '#000' : '#fff',
+                cursor: 'pointer',
+                zIndex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'color 0.3s ease'
+              }}
+            >
+              <Globe size={18} /> Online 
+            </button>
+
+            {/* Offline Tab */}
+            <button
+              onClick={() => setActiveTab('offline')}
+              style={{
+                position: 'relative',
+                background: 'transparent',
+                border: 'none',
+                padding: isMobile ? '12px 24px' : '14px 40px',
+                fontSize: isMobile ? '0.9rem' : '1.05rem',
+                fontWeight: '700',
+                color: activeTab === 'offline' ? '#000' : '#fff',
+                cursor: 'pointer',
+                zIndex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'color 0.3s ease'
+              }}
+            >
+              <MapPin size={18} /> Offline
+            </button>
+
+            {/* The Animated "Pill" that slides behind the active text */}
+            <motion.div
+              layout
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              style={{
+                position: 'absolute',
+                top: 6,
+                bottom: 6,
+                left: activeTab === 'online' ? '6px' : '50%',
+                width: `calc(50% - 6px)`,
+                background: 'var(--accent-color)',
+                borderRadius: '100px',
+                boxShadow: '0 0 15px rgba(163, 255, 0, 0.4)',
+                zIndex: 0
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Hackathon Project Grid */}
+        <motion.div layout style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
           gap: isMobile ? '1.5rem' : '2.5rem'
         }}>
-          {hackathons.map((project, idx) => (
-            <HackathonCard key={idx} project={project} isMobile={isMobile} />
-          ))}
-        </div>
+          <AnimatePresence mode="popLayout">
+            {currentProjects.map((project, idx) => (
+              <HackathonCard key={project.title} project={project} isMobile={isMobile} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
     </section>
   );
