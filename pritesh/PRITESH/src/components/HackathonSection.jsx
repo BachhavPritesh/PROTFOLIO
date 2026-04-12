@@ -140,6 +140,12 @@ const PhotoGalleryModal = ({ photos, onClose }) => {
 const HackathonCard = ({ project, isMobile, openGallery }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleCardClick = () => {
+    if (isMobile) {
+      setIsHovered((prev) => !prev);
+    }
+  };
+
   return (
     <motion.div
       layout
@@ -147,9 +153,9 @@ const HackathonCard = ({ project, isMobile, openGallery }) => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: -30 }}
       transition={{ duration: 0.4 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onClick={() => setIsHovered(!isHovered)}
+      onHoverStart={!isMobile ? () => setIsHovered(true) : undefined}
+      onHoverEnd={!isMobile ? () => setIsHovered(false) : undefined}
+      onClick={handleCardClick}
       style={{
         background: 'rgba(255, 255, 255, 0.03)',
         borderRadius: '30px',
