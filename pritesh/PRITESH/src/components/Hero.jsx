@@ -291,8 +291,9 @@ const Hero = () => {
                             About Me
                         </MagneticButton>
                         <a 
-                            href="#" 
-                            download="Pritesh_Bachhav_CV.pdf"
+                            href="https://drive.google.com/file/d/1wIRYAiFv2d-sZ0IS9itRfthKq56Xy3yw/view?usp=sharing" 
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{ textDecoration: 'none' }}
                         >
                             <MagneticButton
